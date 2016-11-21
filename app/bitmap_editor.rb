@@ -1,18 +1,25 @@
-class BitmapEditor
+require_relative "./lib/editor"
 
+class BitmapEditor
   def run
     @running = true
     puts 'type ? for help'
+    @editor = Editor.new
     while @running
       print '> '
-      input = gets.chomp
+      input = gets.chomp.strip
+
       case input
         when '?'
           show_help
         when 'X'
           exit_console
         else
-          puts 'unrecognised command :('
+          begin
+            @editor.execute(input)
+          rescue Exception => e
+            puts e.message
+          end
       end
     end
   end
