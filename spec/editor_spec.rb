@@ -46,6 +46,17 @@ RSpec.describe Editor do
         expect(editor.bitmap.pixels).to eq(control_bitmap.pixels)
       end
 
+      it 'should fill a region line' do 
+        command = 'F 1 1 N'
+        control_bitmap.draw_pixel(1, 3, "X")
+        control_bitmap.draw_vertical_line(2, 1, 4, "Y")
+        control_bitmap.fill_area(1, 1, "N")
+        editor.execute('L 1 3 X')
+        editor.execute('V 2 1 4 Y')
+        editor.execute(command)
+        expect(editor.bitmap.pixels).to eq(control_bitmap.pixels)
+      end
+
       it 'should show the bitmap' do 
         expected_output = "0 0 0 0 0\n0 0 0 0 0\n0 0 0 0 0\n0 0 0 0 0\n0 0 0 0 0\n0 0 0 0 0\n"
         expect {editor.execute("S")}.to output(expected_output).to_stdout

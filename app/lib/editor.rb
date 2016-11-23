@@ -26,6 +26,9 @@ class Editor
     when /^V #{REGEX_VALID_NUMBER} #{REGEX_VALID_NUMBER} #{REGEX_VALID_NUMBER} #{REGEX_VALID_COLOR}$/
       raise 'bitmap not initialized' if @bitmap.nil?
       @bitmap.draw_vertical_line($1.to_i, $2.to_i, $3.to_i, $4)
+    when /^F( S)? #{REGEX_VALID_NUMBER} #{REGEX_VALID_NUMBER} #{REGEX_VALID_COLOR}$/
+      raise 'bitmap not initialized' if @bitmap.nil?
+      @bitmap.fill_area($2.to_i, $3.to_i, $4, !$1.nil?)
     else
       raise 'unrecognised command :('
     end

@@ -53,7 +53,15 @@ RSpec.describe Bitmap do
     describe "#fill_area" do 
       it 'should flood fill an area with the same color within a boundary' do
         expected_pixel_array = [["N", "N", "N", "N"], ["Y", "Y", "Y", "Y"], ["0", "0", "0", "0"]]
-        bitmap.draw_horizontal_line(2, 1, 4, "Y")
+        bitmap.draw_vertical_line(2, 1, 4, "Y")
+        bitmap.fill_area(1, 1, "N")
+        expect(bitmap.pixels).to eq(expected_pixel_array)
+      end
+      
+      it 'should flood fill an area with the same color within a boundary' do
+        expected_pixel_array = [["N", "N", "X", "0"], ["Y", "Y", "Y", "Y"], ["0", "0", "0", "0"]]
+        bitmap.draw_pixel(1, 3, "X")
+        bitmap.draw_vertical_line(2, 1, 4, "Y")
         bitmap.fill_area(1, 1, "N")
         expect(bitmap.pixels).to eq(expected_pixel_array)
       end
